@@ -37,12 +37,6 @@
     setTimeout(function() {
       console.log('データ保存');
       sessionStorage.setItem('name',`${finalTranscript}`);
-      fetch("{% url 'run_python' %}")
-         .then(response => response.json())
-         .then(data => {
-            // Pythonの処理が完了したら結果を表示
-            alert(data.message);
-         })
     }, 1000); 
   }
 </script>

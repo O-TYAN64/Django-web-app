@@ -1,7 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.template import Context, loader
 from django.shortcuts import render
-from .app import getdata
 import subprocess
 
 def index(request):
