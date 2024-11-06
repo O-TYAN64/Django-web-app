@@ -6,20 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>地域情報音声アシスタント</title>
 </head>
+
 <header>
-  <style>
-    .styled-text {
-      color: #ff5733;
-      /* 文字の色 */
-      font-size: 24px;
-      /* 文字の大きさ */
-    }
-  </style>
-  <div
-    style="text-align: center; padding: 1rem;background: #addde6; border-top: 6px double #221f3f; border-bottom: 6px double #221f3f;font-size: 27px;">
-    <strong>地域情報アシスタント</strong>
-    <br>
-    <strong>~ノノ~</strong>
+  <div style="text-align: center;
+                padding: 1rem;
+                background: #addde6; 
+                border-top: 6px double #221f3f; 
+                border-bottom: 6px double #221f3f;
+                font-size: 30px;">
+    <strong>地域情報アシスタント<br>～ノノ～</strong>
   </div>
 </header>
 
@@ -31,7 +26,10 @@
       </span>
     </h3>
   </div>
-  <div id="result-div" , style="border: black solid 2px; font-size: 150%; padding: 20px;"></div>
+  <div id="result-div" , style="border: black solid 2px;
+                                  font-size: 150%;
+                                  padding: 20px;">
+  </div>
   <table width="100%">
     <tr><br>
       <td align="center">
@@ -45,15 +43,13 @@
               /* 初期の背景色 */
               border: black;
               cursor: pointer;
-              transition: background-color 0.2s ease;
-              /* 色変化の遷移効果 */
               box-shadow: 2px 2px 5px rgba(0, 0, 0, 3);
               border-radius: 15px;
             }
 
             button:active {
               background-color: white;
-              /* クリック時の色変化先 */
+              /* クリック時の変化色 */
             }
           </style>
           <button id="start-btn">
@@ -72,15 +68,13 @@
               /* 初期の背景色 */
               border: black;
               cursor: pointer;
-              transition: background-color 0.2s ease;
-              /* 色変化の遷移効果 */
               box-shadow: 2px 2px 5px rgba(0, 0, 0, 3);
               border-radius: 15px;
             }
 
             button:active {
               background-color: white;
-              /* クリック時の色変化先 */
+              /* クリック時の変化色 */
             }
           </style>
           <button id="stop-btn">
@@ -90,7 +84,9 @@
       </td>
     </tr>
   </table><br>
-  <hr style="border:none;border-top:dashed 1px black;height:1px;width:100%;">
+  <hr style="border:none;
+               border-top:dashed 1px black;
+               height:1px;width:100%;">
   <div style="text-align: center">
     <h3>
       <span style="font-size:150%">
@@ -98,7 +94,10 @@
       </span>
     </h3>
   </div>
-  <div id="response-div" , style="border: black solid 2px; font-size: 150%; padding: 20px;"></div>
+  <div id="response-div" , style="border: black solid 2px; 
+                                  font-size: 150%; 
+                                  padding: 20px;">
+  </div>
 </body>
 
 </html>
@@ -163,6 +162,9 @@
           console.log('サーバーからの応答:', data);
           // 返答を表示
           responseDiv.innerHTML = data.response_text;
+
+          const uttr = new SpeechSynthesisUtterance(data.response_text.replace(/<br>/g, "。"));
+          speechSynthesis.speak(uttr);
         })
         .catch(error => {
           console.error('エラー:', error);

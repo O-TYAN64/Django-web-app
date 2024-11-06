@@ -2,9 +2,8 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from .models import NonoData
 import json
-import sys
-import os
-import MeCab
+from janome.tokenizer import Tokenizer
+
 
 def index(request):
     # POSTリクエスト時の処理
@@ -16,6 +15,7 @@ def index(request):
 
         # speech_textに対する処理
         # response_text = '返答(オウム返し)：' + speech_text
+        # word_list = ['天気', 'を', '教え', 'て']
         word_list = morphological_analysis(speech_text)
         print(word_list)
         response_text = nono_data_get(word_list)
@@ -29,17 +29,10 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
-def morphological_analysis(speech_text):
-    sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
-    os.environ['LC_ALL'] = 'C.UTF-8'
-
-    tagger = MeCab.Tagger("-Owakati")
-
-    str_output = tagger.parse(speech_text)
-
-    #listに変換する
-    list_output = str_output.split(' ')
-    
+def morphological_analysis(text):
+    tokenizer = Tokenizer()
+    tokens = tokenizer.tokenize(text)
+    list_output = [token.base_form for token in tokens]
     return list_output
 
 
