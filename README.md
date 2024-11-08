@@ -4,7 +4,7 @@
 Ubuntu22.04 LTS <br>
 Windows11
 
-## テスト環境 (Web閲覧者)
+## テスト環境 (Web閲覧側)
 iOS 18 <br>
 Android 13 <br>
 Chrome 130 <br>
@@ -14,6 +14,7 @@ Firefoz 131 <br>
 python 3.11<br>
 javascript<br>
 html<br>
+css<br>
 
 # 環境構築
 ## ライブラリーインストール
