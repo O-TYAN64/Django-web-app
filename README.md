@@ -1,9 +1,9 @@
 # Django-web-app
 
 ## 使用環境
-Ubuntu22.04 LTS
+Ubuntu22.04 LTS <br>
 Windows11
 
 ## テスト環境
-iOS 18
+iOS 18 <br>
 Android 13
