@@ -13,8 +13,9 @@ Firefoz 131 <br>
 ## 使用言語
 python 3.11<br>
 javascript<br>
-html<br>
 css<br>
+html<br>
+
 
 # 環境構築
 ## ライブラリーインストール
