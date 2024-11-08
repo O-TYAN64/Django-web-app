@@ -7,6 +7,8 @@ Windows11
 ## テスト環境 (Web閲覧側)
 iOS 18 <br>
 Android 13 <br>
+Windows11<br>
+Safari <br>
 Chrome 130 <br>
 Firefoz 131 <br>
 
