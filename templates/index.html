@@ -6,22 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>地域情報音声アシスタント</title>
 </head>
+
 <header>
-  <style>
-    .styled-text {
-      color: #ff5733;
-      /* 文字の色 */
-      font-size: 24px;
-      /* 文字の大きさ */
-    }
-  </style>
-  <div
-    style="text-align: center; padding: 1rem;background: #addde6; border-top: 6px double #221f3f; border-bottom: 6px double #221f3f;font-size: 27px;">
-    <strong>地域情報アシスタント</strong>
-    <br>
-    <strong>~ノノ~</strong>
+  <div style="text-align: center;
+                padding: 1rem;
+                background: #addde6; 
+                border-top: 6px double #221f3f; 
+                border-bottom: 6px double #221f3f;
+                font-size: 30px;">
+    <strong>地域情報アシスタント<br>～ノノ～</strong>
   </div>
 </header>
+
+
+
 
 <body bgcolor="#f9feff">
   <div style="text-align: center">
@@ -31,7 +29,10 @@
       </span>
     </h3>
   </div>
-  <div id="result-div" , style="border: black solid 2px; font-size: 150%; padding: 20px;"></div>
+  <div id="result-div" , style="border: black solid 2px;
+                                  font-size: 150%;
+                                  padding: 20px;">
+  </div>
   <table width="100%">
     <tr><br>
       <td align="center">
@@ -45,15 +46,13 @@
               /* 初期の背景色 */
               border: black;
               cursor: pointer;
-              transition: background-color 0.2s ease;
-              /* 色変化の遷移効果 */
               box-shadow: 2px 2px 5px rgba(0, 0, 0, 3);
               border-radius: 15px;
             }
 
             button:active {
               background-color: white;
-              /* クリック時の色変化先 */
+              /* クリック時の変化色 */
             }
           </style>
           <button id="start-btn">
@@ -72,15 +71,13 @@
               /* 初期の背景色 */
               border: black;
               cursor: pointer;
-              transition: background-color 0.2s ease;
-              /* 色変化の遷移効果 */
               box-shadow: 2px 2px 5px rgba(0, 0, 0, 3);
               border-radius: 15px;
             }
 
             button:active {
               background-color: white;
-              /* クリック時の色変化先 */
+              /* クリック時の変化色 */
             }
           </style>
           <button id="stop-btn">
@@ -90,83 +87,160 @@
       </td>
     </tr>
   </table><br>
-  <hr style="border:none;border-top:dashed 1px black;height:1px;width:100%;">
+  <hr style="border:none;
+               border-top:dashed 1px black;
+               height:1px;width:100%;">
   <div style="text-align: center">
     <h3>
       <span style="font-size:150%">
-        <strong>ノノから返信</strong>
+        <strong>ノノから返答</strong>
       </span>
     </h3>
   </div>
-  <div id="response-div" , style="border: black solid 2px; font-size: 150%; padding: 20px;"></div>
+  <div id="response-div" , style="border: black solid 2px; 
+                                  font-size: 150%; 
+                                  padding: 20px;">
+  </div>
+
+  <!-- 評価実験用 -->
+  <br>
+  <br>
+  <br>
+  <br>
+  <hr style="border:none;
+               border-top:dashed 1px black;
+               height:1px;width:100%;">
+  <div style="text-align: center">
+    <h3>
+      <span style="font-size:150%">
+        <strong>評価実験用 音声</strong>
+      </span>
+    </h3>
+  </div>
+  <table width="100%">
+    <br>
+    <td align="center">
+      <a>
+        <style>
+          button {
+            padding: 10px;
+            font-size: 10px;
+            color: black;
+            background-color: #add8e6;
+            /* 初期の背景色 */
+            border: black;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 3);
+            border-radius: 15px;
+          }
+
+          button:active {
+            background-color: white;
+            /* クリック時の変化色 */
+          }
+        </style>
+        <button id="description-btn">
+          <font size="6"><b> 説明 </b></font>
+        </button>
+      </a>
+    </td>
+  </table>
+  <!--  -->
+  <audio id="btn_audio">
+    <source src="media/audio/btn_audio.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    function audio() {
+      document.getElementById('btn_audio').currentTime = 0; //連続クリックに対応
+      document.getElementById('btn_audio').play();
+    }
+
+    const startBtn = document.querySelector('#start-btn');
+    const stopBtn = document.querySelector('#stop-btn');
+    const resultDiv = document.querySelector('#result-div');
+    const responseDiv = document.querySelector('#response-div');
+
+    // 評価実験用
+    const descriptionBtn = document.querySelector('#description-btn');
+
+    descriptionBtn.onclick = () => {
+      let description_text = 'こんにちは。私は、地域情報音声アシスタントアプリ、「ノノ」です。私は地域情報を提供し、みなさんの生活をサポートします。何か知りたいことはありますか？';
+      const uttr = new SpeechSynthesisUtterance(description_text);
+      speechSynthesis.speak(uttr);
+    }
+    // 
+
+    SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+    let recognition = new SpeechRecognition();
+
+    recognition.lang = 'ja-JP';
+    recognition.interimResults = true;
+    recognition.continuous = true;
+
+    let finalTranscript = ''; // 確定した(黒の)認識結果
+
+    recognition.onresult = (event) => {
+      let interimTranscript = ''; // 暫定(灰色)の認識結果
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        let transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interimTranscript = transcript;
+        }
+      }
+      resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
+    }
+
+    startBtn.onclick = () => {
+      // 前回のやりとりをリセット
+      finalTranscript = '';
+      resultDiv.innerHTML = '';
+      responseDiv.innerHTML = '';
+      audio();
+      recognition.start();
+    }
+
+    const csrfToken = '{{ csrf_token }}'; // CSRFトークンを取得
+
+    stopBtn.onclick = () => {
+      recognition.stop();
+
+      setTimeout(function () {
+        console.log('送信するテキスト:', finalTranscript);
+
+        // finalTranscriptを送信
+        fetch('/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken  // DjangoのCSRFトークンを設定
+          },
+          body: JSON.stringify({ speech_text: finalTranscript })
+        })
+          .then(response => {
+            // レスポンスがJSONでない場合のエラーハンドリング
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('サーバーからの応答:', data);
+            // 返答を表示
+            responseDiv.innerHTML = data.response_text;
+
+            const uttr = new SpeechSynthesisUtterance(data.response_text.replace(/<br>/g, "。"));
+            speechSynthesis.speak(uttr);
+          })
+          .catch(error => {
+            console.error('エラー:', error);
+          });
+      }, 1000);
+    }
+  </script>
+
 </body>
 
 </html>
-
-<script>
-  const startBtn = document.querySelector('#start-btn');
-  const stopBtn = document.querySelector('#stop-btn');
-  const resultDiv = document.querySelector('#result-div');
-  const responseDiv = document.querySelector('#response-div');
-
-  SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
-  let recognition = new SpeechRecognition();
-
-  recognition.lang = 'ja-JP';
-  recognition.interimResults = true;
-  recognition.continuous = true;
-
-  let finalTranscript = ''; // 確定した(黒の)認識結果
-
-  recognition.onresult = (event) => {
-    let interimTranscript = ''; // 暫定(灰色)の認識結果
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      let transcript = event.results[i][0].transcript;
-      if (event.results[i].isFinal) {
-        finalTranscript += transcript;
-      } else {
-        interimTranscript = transcript;
-      }
-    }
-    resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
-  }
-
-  startBtn.onclick = () => {
-    recognition.start();
-  }
-
-  const csrfToken = '{{ csrf_token }}'; // CSRFトークンを取得
-
-  stopBtn.onclick = () => {
-    recognition.stop();
-
-    setTimeout(function () {
-      console.log('送信するテキスト:', finalTranscript);
-
-      // finalTranscriptを送信
-      fetch('/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken  // DjangoのCSRFトークンを設定
-        },
-        body: JSON.stringify({ speech_text: finalTranscript })
-      })
-        .then(response => {
-          // レスポンスがJSONでない場合のエラーハンドリング
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('サーバーからの応答:', data);
-          // 返答を表示
-          responseDiv.innerHTML = data.response_text;
-        })
-        .catch(error => {
-          console.error('エラー:', error);
-        });
-    }, 1000);
-  }
-</script>
