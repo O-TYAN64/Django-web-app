@@ -14,8 +14,6 @@ def index(request):
         print('speech_text:', speech_text)
 
         # speech_textに対する処理
-        # response_text = '返答(オウム返し)：' + speech_text
-        # word_list = ['天気', 'を', '教え', 'て']
         word_list = morphological_analysis(speech_text)
         print(word_list)
         response_text = nono_data_get(word_list)
