@@ -6,7 +6,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>地域情報音声アシスタント</title>
-  <link rel="stylesheet" href="{% static "css/style.css" %}"/>
+  <link rel="icon" type="image/png" href="{% static 'icon/favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 
 <body>
@@ -32,9 +33,9 @@
           <h1>ノノの使い方</h1>
         </div>
       </div>
-      <img src="media/image/start.jpg" width="100%" height="100%">
-      <img src="media/image/talk.jpg" width="100%" height="100%">
-      <img src="media/image/finish.jpg" width="100%" height="100%">
+      <img src="{% static '/image/start.jpg' %}" width="100%" height="100%">
+      <img src="{% static '/image/talk.jpg' %}" width="100%" height="100%">
+      <img src="{% static '/image/finish.jpg' %}" width="100%" height="100%">
     </div>
   </div>
 
@@ -44,7 +45,7 @@
     </h3>
   </div>
 
-  <div id="result-div"></div>
+  <div id="result-div" contenteditable="true"></div>
 
   <table>
     <tr><br>
@@ -99,6 +100,9 @@
       </a>
     </td>
   </table>
+  <br><br>
+  <div id="event-div"></div>
+
 
   <audio id="btn_audio">
     <source src="media/audio/btn_audio.mp3" type="audio/mp3">

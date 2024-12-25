@@ -12,6 +12,8 @@ const responseDiv = document.querySelector('#response-div');
 const descriptionBtn = document.querySelector('#description-btn');
 const answerBtn = document.querySelector('#answer-btn');
 
+const eventDiv = document.querySelector('#event-div');
+
 descriptionBtn.onclick = () => {
     let description_text = 'こんにちは。私は、地域情報音声アシスタントアプリ、「ノノ」です。私は地域情報を提供し、みなさんの生活をサポートします。何か知りたいことはありますか？';
     const uttr = new SpeechSynthesisUtterance(description_text);
@@ -24,7 +26,7 @@ answerBtn.onclick = () => {
 }
 // 
 
-SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+const SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
 let recognition = new SpeechRecognition();
 
 recognition.lang = 'ja-JP';
@@ -32,18 +34,29 @@ recognition.interimResults = true;
 recognition.continuous = true;
 
 let finalTranscript = ''; // 確定した(黒の)認識結果
-
+let count = 1;
+let isFinal_flag = false;
 recognition.onresult = (event) => {
+    console.log('eventの中身:', event);
     let interimTranscript = ''; // 暫定(灰色)の認識結果
     for (let i = event.resultIndex; i < event.results.length; i++) {
         let transcript = event.results[i][0].transcript;
-        if (event.results[i].isFinal) {
+
+        eventDiv.innerHTML += count + ':' + transcript + '<br>' + event.results[i].isFinal + '<br><br>';
+
+        if (count == 1 && event.results[i].isFinal) {
+            isFinal_flag = true;
+        }
+        if (isFinal_flag) {
+            finalTranscript = transcript;
+        } else if (event.results[i].isFinal) {
             finalTranscript += transcript;
         } else {
             interimTranscript = transcript;
         }
     }
     resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
+    count += 1;
 }
 
 startBtn.onclick = () => {
@@ -93,7 +106,9 @@ stopBtn.onclick = () => {
     }, 1000);
 }
 
-
+resultDiv.addEventListener('input', () => {
+    finalTranscript = resultDiv.innerText;
+});
 
 const clickBtn = document.getElementById('click-btn');
 const popupWrapper = document.getElementById('popup-wrapper');

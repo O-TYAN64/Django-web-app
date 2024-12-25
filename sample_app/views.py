@@ -37,8 +37,6 @@ def morphological_analysis(text):
 def nono_data_get(word_list):
     nono_data = NonoData.objects.values()
 
-    print(nono_data)
-
     response_text = ''
 
     for nono_data_dict in nono_data:
