@@ -9,21 +9,21 @@ const resultDiv = document.querySelector('#result-div');
 const responseDiv = document.querySelector('#response-div');
 
 // 評価実験用
-const descriptionBtn = document.querySelector('#description-btn');
-const answerBtn = document.querySelector('#answer-btn');
+// const descriptionBtn = document.querySelector('#description-btn');
+// const answerBtn = document.querySelector('#answer-btn');
 
-const eventDiv = document.querySelector('#event-div');
+// const eventDiv = document.querySelector('#event-div');
 
-descriptionBtn.onclick = () => {
-    let description_text = 'こんにちは。私は、地域情報音声アシスタントアプリ、「ノノ」です。私は地域情報を提供し、みなさんの生活をサポートします。何か知りたいことはありますか？';
-    const uttr = new SpeechSynthesisUtterance(description_text);
-    speechSynthesis.speak(uttr);
-}
+// descriptionBtn.onclick = () => {
+//     let description_text = 'こんにちは。私は、地域情報音声アシスタントアプリ、「ノノ」です。私は地域情報を提供し、みなさんの生活をサポートします。何か知りたいことはありますか？';
+//     const uttr = new SpeechSynthesisUtterance(description_text);
+//     speechSynthesis.speak(uttr);
+// }
 
-answerBtn.onclick = () => {
-    const uttr = new SpeechSynthesisUtterance(responseDiv.innerHTML.replace(/<br>/g, "。"));
-    speechSynthesis.speak(uttr);
-}
+// answerBtn.onclick = () => {
+//     const uttr = new SpeechSynthesisUtterance(responseDiv.innerHTML.replace(/<br>/g, "。"));
+//     speechSynthesis.speak(uttr);
+// }
 // 
 
 const SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
@@ -37,12 +37,12 @@ let finalTranscript = ''; // 確定した(黒の)認識結果
 let count = 1;
 let isFinal_flag = false;
 recognition.onresult = (event) => {
-    console.log('eventの中身:', event);
+    // console.log('eventの中身:', event);
     let interimTranscript = ''; // 暫定(灰色)の認識結果
     for (let i = event.resultIndex; i < event.results.length; i++) {
         let transcript = event.results[i][0].transcript;
 
-        eventDiv.innerHTML += count + ':' + transcript + '<br>' + event.results[i].isFinal + '<br><br>';
+        // eventDiv.innerHTML += count + ':' + transcript + '<br>' + event.results[i].isFinal + '<br><br>';
 
         if (count == 1 && event.results[i].isFinal) {
             isFinal_flag = true;
